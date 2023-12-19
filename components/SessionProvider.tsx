@@ -3,7 +3,7 @@ import React, { useEffect } from 'react'
 import { createBrowserClient } from '@supabase/ssr'
 import { useUser } from '@/lib/store/user';
 
-export default function sessionProvider() {
+export default function SessionProvider() {
     const setUser = useUser((state: { setUser: any; }) => state.setUser);
 
     const supabase = createBrowserClient(
@@ -21,9 +21,5 @@ export default function sessionProvider() {
         // eslint-disable-next-line
     }, []);
 
-  return (
-    <div>
-      
-    </div>
-  )
+  return (<div></div>)
 }

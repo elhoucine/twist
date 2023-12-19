@@ -2,6 +2,8 @@ import { createServerClient, type CookieOptions } from '@supabase/ssr'
 import { NextResponse, type NextRequest } from 'next/server'
 
 export async function middleware(request: NextRequest) {
+  console.log('yooooo111');
+
   let response = NextResponse.next({
     request: {
       headers: request.headers,
@@ -44,7 +46,11 @@ export async function middleware(request: NextRequest) {
     }
   )
 
-  const {data} = await supabase.auth.getSession();  
+  const {data} = await supabase.auth.getSession();
+
+  if (data.session?.user.user_metadata.role !== "admin") {
+    return NextResponse.redirect(new URL("/", request.url));
+  }
 
   return response
 }
@@ -58,6 +64,6 @@ export const config = {
      * - favicon.ico (favicon file)
      * Feel free to modify this pattern to include more paths.
      */
-    '/((?!_next/static|_next/image|favicon.ico).*)',
+    "/dashboard/:path"
   ],
 }
