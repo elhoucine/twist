@@ -1,10 +1,10 @@
 "use client";
 
 import React from 'react'
+import { usePathname } from 'next/navigation';
 import { createBrowserClient } from '@supabase/ssr'
 import { Button } from '@/components/ui/button'
 import { SiGithub } from "react-icons/si";
-import { usePathname } from '@/node_modules/next/navigation';
 
 export default function LoginForm() {
     const pathName = usePathname();
