@@ -9,6 +9,7 @@ import {
   FormControl,
   FormField,
   FormItem,
+  FormMessage,
 } from "@/components/ui/form"
 import { toast } from "@/components/ui/use-toast"
 import { RocketIcon, StarIcon } from "lucide-react"
@@ -24,7 +25,7 @@ const FormSchema = z.object({
     message: "Title must be at least 2 characters."
   }),
   image_url: z.string().url({ message: "Invalid link." }),
-  content: z.string().min(2, {
+  content: z.string().min(100, {
     message: "Content must be at least 100 characters."
   }),
   is_published: z.boolean(),
@@ -35,7 +36,17 @@ export default function BlogForm() {
   const [isPreview, setIsPreview] = useState(false);
 
   const form = useForm<z.infer<typeof FormSchema>>({
+    mode: "onTouched",
     resolver: zodResolver(FormSchema),
+    // resolver: async (data, context, options) => {
+    //   // you can debug your validation schema here
+    //   console.log("formData", data)
+    //   console.log(
+    //     "validation result",
+    //     await zodResolver(FormSchema)(data, context, options)
+    //   )
+    //   return zodResolver(FormSchema)(data, context, options)
+    // },
     defaultValues: {
       title: "",
       content: "",
@@ -116,10 +127,7 @@ export default function BlogForm() {
                    rounded-md">
                       <RocketIcon />
                       <span>Publish</span>
-                      <Switch
-                        checked={field.value}
-                        onCheckedChange={field.onChange}
-                      />
+                      <Switch {...form.register('is_published')}/>
                     </div>
                   </FormControl>
                 </FormItem>
@@ -128,7 +136,7 @@ export default function BlogForm() {
 
           </div>
 
-          <Button className="flex items-center gap-1">
+          <Button type="submit" className="flex items-center gap-1">
             <BsSave /> Save
           </Button>
 
@@ -143,9 +151,8 @@ export default function BlogForm() {
                 <div className={cn("p-2 w-full flex break-words gap-2",
                   isPreview ? "divide-x-0" : "divide-x",)}>
                   <Input
-                    placeholder=""
-                    value={field.value}
-                    onChange={field.onChange}
+                    {...form.register('title')}
+                    placeholder="Title"
                     className={cn("border-none text-lg font-medium leading-relaxed",
                       isPreview ? "w-0 p-0" : "w-full lg:w-1/2")}
                   />
@@ -158,6 +165,8 @@ export default function BlogForm() {
                   </div>
                 </div>
               </FormControl>
+
+              <FormMessage/>
             </FormItem>
           )}
         />
