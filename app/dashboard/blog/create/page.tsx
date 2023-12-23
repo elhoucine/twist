@@ -19,18 +19,34 @@ import { useState } from "react"
 import { EyeOpenIcon, Pencil1Icon } from "@radix-ui/react-icons"
 import { Input } from "@/components/ui/input"
 import { cn } from "@/lib/utils"
+import Image from "next/image"
+import { Textarea } from "@/components/ui/textarea"
+import MarkdownPreview from "@/components/markdown/MarkDownPreview"
 
 const FormSchema = z.object({
   title: z.string().min(2, {
     message: "Title must be at least 2 characters."
   }),
   image_url: z.string().url({ message: "Invalid link." }),
-  content: z.string().min(100, {
+  content: z.string().min(5, {
     message: "Content must be at least 100 characters."
   }),
   is_published: z.boolean(),
   is_premium: z.boolean(),
-})
+}).refine((data) => {
+  const image_url = data.image_url;
+  try {
+    const url = new URL(image_url);
+    return url.hostname === "picsum.photos"
+  } catch {
+    return false;
+  }
+},
+{
+  message: "Currently we are supporting only the images from picsum.photos",
+  path: ["image_url"]
+}
+);
 
 export default function BlogForm() {
   const [isPreview, setIsPreview] = useState(false);
@@ -48,9 +64,9 @@ export default function BlogForm() {
     //   return zodResolver(FormSchema)(data, context, options)
     // },
     defaultValues: {
-      title: "",
+      title: "Don't Worry, Be Happy—12 Ways to Stay Positive",
       content: "",
-      image_url: "",
+      image_url: "https://picsum.photos/seed/picsum/200/300",
       is_premium: false,
       is_published: true,
     },
@@ -71,28 +87,28 @@ export default function BlogForm() {
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className="w-full border rounded-md space-y-6"
+        className="w-full border rounded-md space-y-6 pb-10"
       >
         <div className="p-5 flex items-center flex-wrap justify-between border-b gap-5">
-          <div className="flex gap-5 items-center">
+          <div className="flex gap-5 items-center flex-wrap">
             <span
               role="button"
               tabIndex={0}
               className="flex items-center gap-1 border 
             bg-zinc-700 p-2 rounded-md hover:ring-2 hover:ring-zinc-400 transition-all"
-              onClick={() => setIsPreview(!isPreview)}
+              onClick={() => setIsPreview(!isPreview && !form.getFieldState("image_url").invalid)}
             >
               {isPreview
                 ? (
                   <>
-                    <EyeOpenIcon />
-                    Preview
+                    <Pencil1Icon />
+                    Edit
                   </>
                 )
                 : (
                   <>
-                    <Pencil1Icon />
-                    Edit
+                    <EyeOpenIcon />
+                    Preview
                   </>
                 )}
             </span>
@@ -127,7 +143,7 @@ export default function BlogForm() {
                    rounded-md">
                       <RocketIcon />
                       <span>Publish</span>
-                      <Switch {...form.register('is_published')}/>
+                      <Switch {...form.register('is_published')} />
                     </div>
                   </FormControl>
                 </FormItem>
@@ -136,7 +152,9 @@ export default function BlogForm() {
 
           </div>
 
-          <Button type="submit" className="flex items-center gap-1">
+          <Button
+            type="submit" className="flex items-center gap-1"
+            disabled={!form.formState.isValid}>
             <BsSave /> Save
           </Button>
 
@@ -166,11 +184,80 @@ export default function BlogForm() {
                 </div>
               </FormControl>
 
-              <FormMessage/>
+              {form.getFieldState('title').invalid &&
+                form.getValues().title && <FormMessage />}
             </FormItem>
           )}
         />
 
+        <FormField
+          control={form.control}
+          name="image_url"
+          render={({ field }) => (
+            <FormItem>
+              <FormControl>
+                <div className={cn("p-2 w-full flex break-words gap-2",
+                  isPreview ? "divide-x-0" : "divide-x",)}>
+                  <Input
+                    {...form.register('image_url')}
+                    placeholder="Image URL"
+                    className={cn("border-none text-lg font-medium leading-relaxed",
+                      isPreview ? "w-0 p-0" : "w-full lg:w-1/2")}
+                  />
+                  <div className={cn(
+                    "lg:px-10",
+                    isPreview ? "mx-auto w-full lg:w-4/5" : "w-1/2 lg:block hidden")}>
+                    {!isPreview ? <>
+                      <p>Click on preview to see image.</p>
+                    </> : <div className="relative h-80 mt-5 border rounded-md">
+                      <Image
+                        src={form.getValues().image_url}
+                        alt="preview"
+                        className="w-2 object-cover object-center rounded-md"
+                        fill
+                      />
+                    </div>
+                    }
+                  </div>
+                </div>
+              </FormControl>
+
+              {form.getFieldState('image_url').invalid &&
+                form.getValues().image_url && <div className="p-2 ">
+                  <FormMessage />
+                </div>
+              }
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
+          name="content"
+          render={({ field }) => (
+            <FormItem>
+              <FormControl>
+                <div className={cn("p-2 w-full flex break-words gap-2",
+                  isPreview ? "divide-x-0" : "divide-x h-70vh",)}>
+                  <Textarea
+                    {...form.register('content')}
+                    placeholder="content"
+                    className={cn("border-none text-lg font-medium leading-relaxed resize-none h-full",
+                      isPreview ? "w-0 p-0" : "w-full lg:w-1/2")}
+                  />
+                  <div className={cn(
+                    "overflow-y-auto",
+                    isPreview ? "mx-auto w-full lg:w-4/5" : "w-1/2 lg:block hidden")}>
+                    <MarkdownPreview content={form.getValues().content} />
+                  </div>
+                </div>
+              </FormControl>
+
+              {form.getFieldState('content').invalid &&
+                form.getValues().content && <FormMessage />}
+            </FormItem>
+          )}
+        />
       </form>
     </Form>
   )
