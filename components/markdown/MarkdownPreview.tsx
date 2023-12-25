@@ -25,6 +25,9 @@ export default function MarkdownPreview({ content, className }: { content: strin
                     if (match?.length) {
                         let Icon = PiTerminalThin;
                         const isMatch = icons.hasOwnProperty(match[1]);
+                        if (isMatch) {
+                            Icon = icons[match[1] as keyof typeof icons];
+                        }
                         return <div className='bg-gradient-dark text-gray-300 border rounded-md'>
                             <div className="px-5 py-2 border-b flex items-center justify-between">
                                 <div className="flex items-center">
