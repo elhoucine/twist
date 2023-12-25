@@ -3,7 +3,10 @@ import { cookies } from 'next/headers'
 import { createServerClient, type CookieOptions } from '@supabase/ssr'
 import { BlogFormSchematype } from '@/app/dashboard/schema';
 import { Database } from '../types/supabase';
+import { revalidatePath } from 'next/cache';
 const cookieStore = cookies()
+
+const DASHBOARD = '/dashboard';
 
 const supabase = createServerClient<Database>(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -36,7 +39,7 @@ export async function createBlog(data: BlogFormSchematype) {
     } else {
         const result = await supabase.from('blog_content')
             .insert({ blog_id: resultBlog.data.id, content: data.content })
-            // TODO: revalidation
+        // TODO: revalidation
         return JSON.stringify(result);
     }
 }
@@ -46,4 +49,13 @@ export async function readBlog() {
         .from('blog')
         .select('*')
         .order('created_at', { ascending: true });
+}
+
+export async function deleteBlogById(id: string) {
+    const result = await supabase
+        .from('blog')
+        .delete()
+        .eq('id', id);
+    revalidatePath(DASHBOARD);
+    return JSON.stringify(result);
 }

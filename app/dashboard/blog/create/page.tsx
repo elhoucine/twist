@@ -6,7 +6,7 @@ import { toast } from "@/components/ui/use-toast"
 import { BlogFormSchematype } from '../../schema';
 import BlogForm from '../../components/BlogForm'
 
-export default function page() {
+export default function Page() {
   const router = useRouter()
 
   const handleCreate = async (data: BlogFormSchematype) => {

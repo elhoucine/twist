@@ -1,8 +1,10 @@
+"use server";
 import React from 'react'
 import { Button } from '@/components/ui/button'
 import { Switch } from '@/components/ui/switch'
 import { readBlog } from '@/lib/ations/blog'
 import { EyeIcon, PencilIcon, TrashIcon } from 'lucide-react'
+import DeleteAlert from './DeleteAlert'
 
 
 export default async function BlogTable() {
@@ -25,7 +27,7 @@ export default async function BlogTable() {
                             </h1>
                             <Switch checked={blog.is_premium} />
                             <Switch checked={blog.is_published} />
-                            <Actions />
+                            <Actions id={blog.id} />
                         </div>
                     )
                 })}
@@ -34,17 +36,14 @@ export default async function BlogTable() {
     )
 };
 
-const Actions = () => {
+const Actions = ({ id }: { id: string }) => {
     return (
         <div className='flex items-center gap-2 flex-wrap'>
             <Button variant="outline" className='flex items-center gap-2'>
                 <EyeIcon />
                 View
             </Button>
-            <Button variant="outline" className='flex items-center gap-2'>
-                <TrashIcon />
-                Delete
-            </Button>
+            <DeleteAlert blogId={id} />
             <Button variant="outline" className='flex items-center gap-2'>
                 <PencilIcon />
                 Edit
