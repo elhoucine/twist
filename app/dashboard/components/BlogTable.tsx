@@ -1,9 +1,14 @@
+import React from 'react'
 import { Button } from '@/components/ui/button'
 import { Switch } from '@/components/ui/switch'
+import { readBlog } from '@/lib/ations/blog'
 import { EyeIcon, PencilIcon, TrashIcon } from 'lucide-react'
-import React from 'react'
 
-export default function BlogTable() {
+
+export default async function BlogTable() {
+
+    const { data: blogs } = await readBlog();
+
     return (
         <div className="overflow-x-auto">
             <div className="border bg-gradient-dark rounded-md w-[900px] md:w-full">
@@ -12,14 +17,18 @@ export default function BlogTable() {
                     <h1 className=''>Premium</h1>
                     <h1>Publish</h1>
                 </div>
-                <div className='grid grid-cols-5 p-5'>
-                    <h1 className='col-span-2'>
-                        Blog Title
-                    </h1>
-                        <Switch checked />
-                        <Switch checked={false} />
-                    <Actions />
-                </div>
+                {blogs?.map((blog, index) => {
+                    return (
+                        <div key={index} className='grid grid-cols-5 p-5'>
+                            <h1 className='col-span-2'>
+                                {blog.title}
+                            </h1>
+                            <Switch checked={blog.is_premium} />
+                            <Switch checked={blog.is_published} />
+                            <Actions />
+                        </div>
+                    )
+                })}
             </div>
         </div>
     )
