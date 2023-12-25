@@ -1,6 +1,12 @@
 "use client"
-import { zodResolver } from "@hookform/resolvers/zod"
+import { useState, useTransition } from "react"
+import Image from "next/image"
+import { BsSave } from 'react-icons/bs';
 import { useForm } from "react-hook-form"
+import { RocketIcon, StarIcon } from "lucide-react"
+import { EyeOpenIcon, Pencil1Icon } from "@radix-ui/react-icons"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import {
     Form,
@@ -9,14 +15,8 @@ import {
     FormItem,
     FormMessage,
 } from "@/components/ui/form"
-import { RocketIcon, StarIcon } from "lucide-react"
 import { Switch } from "@/components/ui/switch"
-import { BsSave } from 'react-icons/bs';
-import { useState, useTransition } from "react"
-import { EyeOpenIcon, Pencil1Icon } from "@radix-ui/react-icons"
 import { Input } from "@/components/ui/input"
-import { cn } from "@/lib/utils"
-import Image from "next/image"
 import { Textarea } from "@/components/ui/textarea"
 import MarkdownPreview from "@/components/markdown/MarkDownPreview"
 import { BlogFormSchema, BlogFormSchematype } from "../schema"
@@ -30,15 +30,6 @@ export default function BlogForm({
     const form = useForm<BlogFormSchematype>({
         mode: "onTouched",
         resolver: zodResolver(BlogFormSchema),
-        // resolver: async (data, context, options) => {
-        //   // you can debug your validation schema here
-        //   console.log("formData", data)
-        //   console.log(
-        //     "validation result",
-        //     await zodResolver(BlogFormSchema)(data, context, options)
-        //   )
-        //   return zodResolver(BlogFormSchema)(data, context, options)
-        // },
         defaultValues: {
             title: "Don't Worry, Be Happy—12 Ways to Stay Positive",
             content: "",
@@ -65,8 +56,8 @@ export default function BlogForm({
                         <span
                             role="button"
                             tabIndex={0}
-                            className="flex items-center gap-1 border 
-            bg-zinc-700 p-2 rounded-md hover:ring-2 hover:ring-zinc-400 transition-all"
+                            className="flex items-center gap-1 border bg-zinc-700 p-2 rounded-md 
+                                        hover:ring-2 hover:ring-zinc-400 transition-all"
                             onClick={() => setIsPreview(!isPreview && !form.getFieldState("image_url").invalid)}
                         >
                             {isPreview
@@ -90,8 +81,7 @@ export default function BlogForm({
                             render={({ field }) => (
                                 <FormItem>
                                     <FormControl>
-                                        <div className="flex items-center gap-1 border bg-zinc-700 p-2
-                   rounded-md">
+                                        <div className="flex items-center gap-1 border bg-zinc-700 p-2 rounded-md">
                                             <StarIcon />
                                             <span>Premium</span>
                                             <Switch
@@ -110,8 +100,7 @@ export default function BlogForm({
                             render={({ field }) => (
                                 <FormItem>
                                     <FormControl>
-                                        <div className="flex items-center gap-1 border bg-zinc-700 p-2
-                   rounded-md">
+                                        <div className="flex items-center gap-1 border bg-zinc-700 p-2 rounded-md">
                                             <RocketIcon />
                                             <span>Publish</span>
                                             <Switch {...form.register('is_published')} />
