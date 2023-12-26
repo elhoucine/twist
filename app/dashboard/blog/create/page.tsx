@@ -13,7 +13,7 @@ export default function Page() {
     const result = await createBlog(data);
     const { error } = JSON.parse(result);
 
-    if(error?.message) {
+    if (error?.message) {
       toast({
         title: "Failed to create post.",
         description: (
@@ -32,6 +32,6 @@ export default function Page() {
   }
 
   return (
-   <BlogForm onSubmit={handleCreate} />
+    <BlogForm onSubmit={handleCreate} />
   )
 }

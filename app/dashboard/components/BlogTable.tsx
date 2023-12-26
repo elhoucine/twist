@@ -3,7 +3,7 @@ import React from 'react'
 import { Button } from '@/components/ui/button'
 import { Switch } from '@/components/ui/switch'
 import { readBlog } from '@/lib/ations/blog'
-import { EyeIcon, PencilIcon, TrashIcon } from 'lucide-react'
+import { EyeIcon, PencilIcon } from 'lucide-react'
 import DeleteAlert from './DeleteAlert'
 
 

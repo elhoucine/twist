@@ -16,7 +16,7 @@ export default function Dashboard() {
         </Link>
       </div>
       {/* @ts-expect-error Server Component */}
-      <BlogTable/>
+      <BlogTable />
     </div>
   )
 }
