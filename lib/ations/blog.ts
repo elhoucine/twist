@@ -60,3 +60,25 @@ export async function readBlogContent(blogId: string) {
         .eq('id', blogId)
         .single();
 }
+
+export async function updateBlogDetailById(id: string, data: BlogFormSchematype) {
+    const supabase = await createSupabaseServer();
+    const { ['content']: excludedKey, ...blog } = data;
+
+    const resultBlog = await supabase
+        .from('blog')
+        .update(blog)
+        .eq('id', id);
+
+    if (resultBlog.error) {
+        return JSON.stringify(resultBlog)
+    } else {
+        const result = await supabase
+            .from('blog_content')
+            .update({ content: data.content })
+            .eq('blog_id', id)
+
+        revalidatePath(DASHBOARD);
+        return JSON.stringify(result);
+    }
+}

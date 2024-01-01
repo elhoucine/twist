@@ -20,10 +20,15 @@ import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import MarkdownPreview from "@/components/markdown/MarkDownPreview"
 import { BlogFormSchema, BlogFormSchematype } from "../schema"
+import { BlogDetail } from "@/lib/types";
 
 export default function BlogForm({
+    blog,
     onSubmit
-}: { onSubmit: (data: BlogFormSchematype) => void; }) {
+}: {
+    blog?: BlogDetail
+    onSubmit: (data: BlogFormSchematype) => void;
+}) {
     const [isPending, startTransition] = useTransition();
     const [isPreview, setIsPreview] = useState(false);
 
@@ -31,11 +36,11 @@ export default function BlogForm({
         mode: "onTouched",
         resolver: zodResolver(BlogFormSchema),
         defaultValues: {
-            title: "Don't Worry, Be Happy—12 Ways to Stay Positive",
-            content: "",
-            image_url: "https://picsum.photos/seed/picsum/200/300",
-            is_premium: false,
-            is_published: true,
+            title: blog?.title || "",
+            content: blog?.blog_content?.content || "",
+            image_url: blog?.image_url || "",
+            is_premium: blog?.is_premium || false,
+            is_published: blog?.is_published || true,
         },
     })
 
@@ -103,7 +108,10 @@ export default function BlogForm({
                                         <div className="flex items-center gap-1 border bg-zinc-700 p-2 rounded-md">
                                             <RocketIcon />
                                             <span>Publish</span>
-                                            <Switch {...form.register('is_published')} />
+                                            <Switch
+                                                checked={field.value}
+                                                onCheckedChange={field.onChange}
+                                            />
                                         </div>
                                     </FormControl>
                                 </FormItem>
