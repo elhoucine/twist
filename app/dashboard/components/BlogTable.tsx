@@ -6,6 +6,7 @@ import { EyeIcon, PencilIcon } from 'lucide-react'
 import DeleteAlert from './DeleteAlert'
 import SwitchForm from './SwitchForm';
 import { BlogFormSchematype } from '../schema';
+import Link from 'next/link';
 
 
 export default async function BlogTable() {
@@ -56,10 +57,12 @@ const Actions = ({ id }: { id: string }) => {
                 View
             </Button>
             <DeleteAlert blogId={id} />
-            <Button variant="outline" className='flex items-center gap-2'>
-                <PencilIcon />
-                Edit
-            </Button>
+            <Link href={`/dashboard/blog/edit/${id}`}>
+                <Button variant="outline" className='flex items-center gap-2'>
+                    <PencilIcon />
+                    Edit
+                </Button>
+            </Link>
         </div>
     )
 }

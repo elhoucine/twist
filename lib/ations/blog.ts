@@ -1,26 +1,12 @@
 "use server";
-import { cookies } from 'next/headers'
-import { createServerClient, type CookieOptions } from '@supabase/ssr'
 import { BlogFormSchematype } from '@/app/dashboard/schema';
-import { Database } from '../types/supabase';
 import { revalidatePath } from 'next/cache';
-const cookieStore = cookies()
+import { createSupabaseServer } from '../supabase';
 
 const DASHBOARD = '/dashboard';
 
-const supabase = createServerClient<Database>(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
-    {
-        cookies: {
-            get(name: string) {
-                return cookieStore.get(name)?.value
-            }
-        },
-    }
-)
-
 export async function createBlog(data: BlogFormSchematype) {
+    const supabase = await createSupabaseServer();
     const { ['content']: excludedKey, ...blog } = data;
     const resultBlog = await supabase.from("blog")
         .insert(blog)
@@ -39,6 +25,7 @@ export async function createBlog(data: BlogFormSchematype) {
 }
 
 export async function readBlog() {
+    const supabase = await createSupabaseServer();
     return supabase
         .from('blog')
         .select('*')
@@ -46,6 +33,7 @@ export async function readBlog() {
 }
 
 export async function deleteBlogById(id: string) {
+    const supabase = await createSupabaseServer();
     const result = await supabase
         .from('blog')
         .delete()
@@ -55,10 +43,20 @@ export async function deleteBlogById(id: string) {
 }
 
 export async function updateBlogById(id: string, data: BlogFormSchematype) {
+    const supabase = await createSupabaseServer();
     const result = await supabase
         .from('blog')
         .update(data)
         .eq('id', id);
     revalidatePath(DASHBOARD);
     return JSON.stringify(result);
+}
+
+export async function readBlogContent(blogId: string) {
+    const supabase = await createSupabaseServer();
+    return supabase
+        .from('blog')
+        .select('*, blog_content(*)')
+        .eq('id', blogId)
+        .single();
 }
