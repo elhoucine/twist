@@ -19,7 +19,7 @@ export async function createBlog(data: BlogFormSchematype) {
     } else {
         const result = await supabase.from('blog_content')
             .insert({ blog_id: resultBlog.data.id, content: data.content })
-        // TODO: revalidation
+        revalidatePath(DASHBOARD);
         return JSON.stringify(result);
     }
 }
