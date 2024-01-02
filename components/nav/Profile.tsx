@@ -8,6 +8,8 @@ import {
     PopoverContent,
     PopoverTrigger,
 } from "@/components/ui/popover"
+import { PopoverClose } from "@radix-ui/react-popover";
+
 import Link from 'next/link';
 import { Button } from '../ui/button';
 
@@ -48,20 +50,24 @@ export default function Profile() {
                     </p>
                 </div>
                 {isAdmin && <Link href="/dashboard" className="block">
-                    <Button
-                        className="w-full flex items-center justify-between">
-                        Dashboard
-                        <DashboardIcon />
-                    </Button>
+                    <PopoverClose>
+                        <Button
+                            className="w-full flex items-center justify-between">
+                            Dashboard
+                            <DashboardIcon />
+                        </Button>
+                    </PopoverClose>
                 </Link>}
-                <Button
-                    variant="ghost"
-                    className="w-full flex items-center justify-between"
-                    onClick={handleLogout}
-                >
-                    Logout
-                    <LockOpen1Icon />
-                </Button>
+                <PopoverClose>
+                    <Button
+                        className="w-full flex items-center justify-between"
+                        variant="ghost"
+                        onClick={handleLogout}
+                    >
+                        Logout
+                        <LockOpen1Icon />
+                    </Button>
+                </PopoverClose>
             </PopoverContent>
         </Popover>
     )
