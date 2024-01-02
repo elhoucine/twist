@@ -1,7 +1,7 @@
 "use server";
 import React from 'react'
 import { Button } from '@/components/ui/button'
-import { readBlog, updateBlogById } from '@/lib/ations/blog'
+import { readBlogAdmin, updateBlogById } from '@/lib/ations/blog'
 import { EyeIcon, PencilIcon } from 'lucide-react'
 import DeleteAlert from './DeleteAlert'
 import SwitchForm from './SwitchForm';
@@ -11,7 +11,7 @@ import Link from 'next/link';
 
 export default async function BlogTable() {
 
-    const { data: blogs } = await readBlog();
+    const { data: blogs } = await readBlogAdmin();
 
     return (
         <div className="overflow-x-auto">
