@@ -58,6 +58,7 @@ export async function updateBlogById(id: string, data: BlogFormSchematype) {
         .update(data)
         .eq('id', id);
     revalidatePath(DASHBOARD);
+    revalidatePath('/blog/' + id);
     return JSON.stringify(result);
 }
 
@@ -88,6 +89,7 @@ export async function updateBlogDetailById(id: string, data: BlogFormSchematype)
             .eq('blog_id', id)
 
         revalidatePath(DASHBOARD);
+        revalidatePath('/blog/' + id);
         return JSON.stringify(result);
     }
 }
