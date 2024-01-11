@@ -48,6 +48,7 @@ export async function deleteBlogById(id: string) {
         .delete()
         .eq('id', id);
     revalidatePath(DASHBOARD);
+    revalidatePath('/blog/' + id);
     return JSON.stringify(result);
 }
 
