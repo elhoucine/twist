@@ -36,7 +36,6 @@ export default async function page() {
             </h1>
           </div>
         </Link>)
-
       })}
     </div>
   )
