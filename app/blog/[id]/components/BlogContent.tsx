@@ -1,8 +1,8 @@
 "use client";
+import React, { useEffect, useState } from 'react'
+import { createClient } from '@supabase/supabase-js';
 import MarkdownPreview from '@/components/markdown/MarkDownPreview';
 import { Database } from '@/lib/types/supabase';
-import { createClient } from '@supabase/supabase-js';
-import React, { useEffect, useState } from 'react'
 import BlogLoading from './BlogLoading';
 
 export default function BlogContent({ blogId }: { blogId: string }) {

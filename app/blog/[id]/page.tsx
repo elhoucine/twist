@@ -1,6 +1,6 @@
-import { iBlog } from '@/lib/types';
-import Image from 'next/image';
 import React from 'react'
+import Image from 'next/image';
+import { iBlog } from '@/lib/types';
 import BlogContent from './components/BlogContent';
 
 export default async function page({ params }: { params: { id: string } }) {
