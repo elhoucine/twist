@@ -38,7 +38,6 @@ export default async function page() {
         </Link>)
 
       })}
-      <Button>Click</Button>
     </div>
   )
 }
