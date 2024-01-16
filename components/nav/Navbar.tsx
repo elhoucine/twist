@@ -6,8 +6,8 @@ import { useUser } from '@/lib/store/user'
 import Profile from './Profile';
 
 export default function Navbar() {
-    const user = useUser((state: { user: any; }) => state.user);
-    
+    const user = useUser((state) => state.user);
+
     return (
         <nav className='flex items-center justify-between'>
             <div className=' group'>
@@ -15,7 +15,7 @@ export default function Navbar() {
                 <div className=" h-1 w-0 group-hover:w-full transition-all bg-green-500"></div>
             </div>
             {
-                user?.id ? <Profile/> : <LoginForm />
+                user?.id ? <Profile /> : <LoginForm />
             }
         </nav>
     )

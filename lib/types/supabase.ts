@@ -72,7 +72,7 @@ export interface Database {
           role: string
           stripe_customer_id: string | null
           stripe_subscription_id: string | null
-          subscripiton_status: boolean
+          subscription_status: boolean
         }
         Insert: {
           created_at?: string

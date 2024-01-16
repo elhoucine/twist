@@ -12,11 +12,14 @@ import { PopoverClose } from "@radix-ui/react-popover";
 
 import Link from 'next/link';
 import { Button } from '../ui/button';
+import ManageBilling from '../stripe/ManageBilling';
 
 
 export default function Profile() {
-    const user = useUser((state: { user: any; }) => state.user);
-    const setUser = useUser((state: { setUser: any; }) => state.setUser);
+    const user = useUser((state) => state.user);
+    const setUser = useUser((state) => state.setUser);
+    const isAdmin = user?.role === "admin";
+    const isSub = user?.subscription_status;
 
     const supabase = createBrowserClient(
         process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -25,18 +28,15 @@ export default function Profile() {
 
     const handleLogout = async () => {
         await supabase.auth.signOut();
-        setUser(undefined);
+        setUser(null);
     }
-
-    const isAdmin = user?.user_metadata?.role === "admin";
-
 
     return (
         <Popover>
             <PopoverTrigger>
                 <Image
-                    src={user?.user_metadata.avatar_url}
-                    alt={user?.user_metadata.user_name}
+                    src={user?.image_url || ''}
+                    alt={user?.display_name || ''}
                     width={50}
                     height={50}
                     className=' rounded-full ring-2 ring-green-500'
@@ -44,9 +44,9 @@ export default function Profile() {
             </PopoverTrigger>
             <PopoverContent className="p-2 space-y-3 devide-y">
                 <div className="px-4 text-sm">
-                    <p>{user?.user_metadata?.user_name}</p>
+                    <p>{user?.display_name}</p>
                     <p className="text-gray-500">
-                        {user?.user_metadata.email}
+                        {user?.email}
                     </p>
                 </div>
                 {isAdmin && <Link href="/dashboard" className="block">
@@ -58,6 +58,7 @@ export default function Profile() {
                         </Button>
                     </PopoverClose>
                 </Link>}
+                {isSub && <ManageBilling />}
                 <PopoverClose>
                     <Button
                         className="w-full flex items-center justify-between"
