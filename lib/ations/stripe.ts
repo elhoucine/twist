@@ -18,3 +18,10 @@ export async function checkout(email: string, redirectTo: string) {
 
     return JSON.stringify(result);
 }
+
+export async function manageBilling(customerId: string) {
+    return await stripe.billingPortal.sessions.create({
+        customer: customerId,
+        return_url: process.env.SITE_URL
+    });
+}

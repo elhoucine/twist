@@ -31,8 +31,8 @@ export async function POST(request: any) {
                 // Call subase to user table.
                 const { error } = await onSuccessSubscription(
                     sub.status === 'active',
-                    sub.id,
                     customer.id,
+                    sub.id,
                     customer.email!
                 );
 
@@ -40,16 +40,31 @@ export async function POST(request: any) {
                     return NextResponse.json({ error: error.message })
                 }
             }
-        case 'payment_intent.succeeded':
-            const paymentIntentSucceeded = event.data.object;
-            console.log('payment success');
-
+        case "customer.subscription.deleted":
+            const deleteSub = event.data.object;
+            const { error } = await onCancelSubscription(false, deleteSub.id);
+            if (error?.message) {
+                return NextResponse.json({ error: 'Failed to cancel subscription' + error.message })
+            }
             break;
         default:
             console.log(`Unhandled event type ${event.type}`);
     }
 
     return NextResponse.json({});
+}
+
+const onCancelSubscription = async (subscription_status: boolean, subscriptionId: string) => {
+    const supabaseAdmin = await createSupabaseAdmin();
+    return await supabaseAdmin
+        .from('users')
+        .update({
+            subscription_status,
+            stripe_customer_id: null,
+            stripe_subscription_id: null
+        })
+        .eq('stripe_subscription_id', subscriptionId)
+
 }
 
 const onSuccessSubscription = async (
