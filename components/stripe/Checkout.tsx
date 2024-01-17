@@ -10,8 +10,8 @@ import { Button } from '../ui/button'
 
 export default function Checkout() {
     const user = useUser(state => state.user);
-    const pathname = usePathname();
     const [isPending, startTransition] = useTransition();
+    const pathname = usePathname();
 
     const handleCheckout = (e: FormEvent) => {
         e.preventDefault();

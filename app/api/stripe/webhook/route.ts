@@ -5,7 +5,6 @@ import { buffer } from 'stream/consumers';
 import { createSupabaseAdmin } from '@/lib/supabase';
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!);
-
 const endpointSecret = process.env.STRIPE_HOOKS_ENDPOINT_SECRET!;
 
 export async function POST(request: any) {
@@ -28,7 +27,6 @@ export async function POST(request: any) {
             });
             if (subscription.data.length) {
                 const sub = subscription.data[0];
-                // Call subase to user table.
                 const { error } = await onSuccessSubscription(
                     sub.status === 'active',
                     customer.id,
@@ -64,7 +62,6 @@ const onCancelSubscription = async (subscription_status: boolean, subscriptionId
             stripe_subscription_id: null
         })
         .eq('stripe_subscription_id', subscriptionId)
-
 }
 
 const onSuccessSubscription = async (
