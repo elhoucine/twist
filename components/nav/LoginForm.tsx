@@ -19,7 +19,6 @@ export default function LoginForm() {
             provider: "github",
             options: {
                 redirectTo: location.origin + "/auth/callback",
-                next: '' + pathName
             }
         })
     }

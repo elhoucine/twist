@@ -1,10 +1,10 @@
 "use client";
 import React, { useEffect, useState } from 'react'
 import { createClient } from '@supabase/supabase-js';
+import Checkout from '@/components/stripe/Checkout';
 import MarkdownPreview from '@/components/markdown/MarkDownPreview';
 import { Database } from '@/lib/types/supabase';
 import BlogLoading from './BlogLoading';
-import Checkout from '@/components/stripe/Checkout';
 
 export default function BlogContent({ blogId }: { blogId: string }) {
     const [blog, setBlog] = useState<{
