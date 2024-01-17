@@ -5,8 +5,8 @@ import BlogContent from './components/BlogContent';
 
 export async function generateStaticParams() {
     const { data: blog } = await fetch(process.env.SITE_URL + '/api/blog?id=*')
-        .then(res => res.json()) as { data: iBlog };
-    return blog;
+        .then(res => res.json()) as { data: iBlog[] };
+    return blog
 }
 
 export async function generateMetadata({ params }: { params: { id: string } }) {
