@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from 'react'
 import { createClient } from '@supabase/supabase-js';
 import Checkout from '@/components/stripe/Checkout';
-import MarkdownPreview from '@/components/markdown/MarkDownPreview';
+import MarkdownPreview from '@/components/markdown/MarkdownPreview';
 import { Database } from '@/lib/types/supabase';
 import BlogLoading from './BlogLoading';
 

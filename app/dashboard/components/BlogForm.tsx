@@ -18,7 +18,7 @@ import {
 import { Switch } from "@/components/ui/switch"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
-import MarkdownPreview from "@/components/markdown/MarkDownPreview"
+import MarkdownPreview from "@/components/markdown/MarkdownPreview"
 import { BlogFormSchema, BlogFormSchematype } from "../schema"
 import { BlogDetail } from "@/lib/types";
 
