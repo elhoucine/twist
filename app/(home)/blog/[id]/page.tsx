@@ -4,14 +4,14 @@ import { iBlog } from '@/lib/types';
 import BlogContent from './components/BlogContent';
 
 export async function generateStaticParams() {
-    const { data: blog } = await fetch(process.env.SITE_URL + '/api/blog?id=*')
+    const { data: blog } = await fetch(process.env.SITE_PROD_URL + '/api/blog?id=*')
         .then(res => res.json()) as { data: iBlog[] };
     return blog
 }
 
 export async function generateMetadata({ params }: { params: { id: string } }) {
     const { data: blog } = await fetch(
-        process.env.SITE_URL + '/api/blog?id=' + params.id
+        process.env.SITE_PROD_URL + '/api/blog?id=' + params.id
     ).then(res => res.json()) as { data: iBlog };
 
     return {
@@ -21,7 +21,7 @@ export async function generateMetadata({ params }: { params: { id: string } }) {
         },
         openGraph: {
             title: blog?.title,
-            url: process.env.SITE_URL + 'blog/' + params.id,
+            url: process.env.SITE_PROD_URL + 'blog/' + params.id,
             siteName: 'Twist',
             image: blog?.image_url,
             type: 'website'
@@ -31,7 +31,7 @@ export async function generateMetadata({ params }: { params: { id: string } }) {
 }
 
 export default async function page({ params }: { params: { id: string } }) {
-    const { data: blog } = await fetch(process.env.SITE_URL + '/api/blog?id=' + params.id)
+    const { data: blog } = await fetch(process.env.SITE_PROD_URL + '/api/blog?id=' + params.id)
         .then(res => res.json()) as { data: iBlog };
 
     if (!blog?.id) {
