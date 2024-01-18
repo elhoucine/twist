@@ -26,7 +26,7 @@ export async function generateMetadata({ params }: { params: { id: string } }) {
             image: blog?.image_url,
             type: 'website'
         },
-        keywords: ['twist', 'el dev', 'personal blog']
+        keywords: ['frontend', 'frontend tips', 'frontend blog', 'twist blog']
     }
 }
 
