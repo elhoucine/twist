@@ -9,7 +9,14 @@ export default function Footer() {
                     <div className="space-y-2 w-full sm:w96">
                         <h1 className='text-3xl font-bold'>Twist blog</h1>
                         <p>
-                            Blog posts about frontend development
+                            I began developing this blog application as part of a tutorial then it became my playground to explore and understand React/NextJs,
+                            along with various other tools. Initially, the plan was to populate it with placeholder lorem ipsum content for testing purposes.
+                            However, I decided to add a twist: rather than filling it with mundane text,
+                            I&apos;m using this platform as a dual opportunity to enhance my writing skills as well.
+                            <br></br>
+                            That said PLEASE consider both the app and its content (as helpful as it could be) not stable and may change or vanish any time.
+                            <br></br>
+                            If you like anything feel free to copy it somewhere safe 👨‍💻🚀
                         </p>
                     </div>
                     <div className="flex items-center gap-2">
