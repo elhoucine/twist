@@ -6,7 +6,7 @@ import Image from 'next/image';
 export default async function page() {
   const { data: blogs } = await readBlog();
   return (
-    <div className='w-full h-70vh grid grid-cols-1 md:grid-cols-3 gap-5 p-5 xl:p-0'>
+    <div className='w-full grid grid-cols-1 md:grid-cols-3 gap-5 p-5 xl:p-0'>
       {blogs?.map((blog, index) => {
         return (<Link
           href={`/blog/${blog.id}`} key={index}
