@@ -44,7 +44,7 @@ export default function MarkdownPreview({ content, className }: { content: strin
                             </div>
                         </div>
                     } else {
-                        return <code className='bg-red-700 rounded-md px-2'>{children}</code>
+                        return <code className='bg-pink-700 rounded-md px-2'>{children}</code>
                     }
                 }
             }}>

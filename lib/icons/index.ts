@@ -1,7 +1,8 @@
-import { SiJavascript, SiPython, SiReact } from "react-icons/si";
+import { SiGnubash, SiJavascript, SiLinux, SiMacos, SiPython, SiReact, SiZsh } from "react-icons/si";
 
 export const icons = {
     js: SiJavascript,
     react: SiReact,
-    py: SiPython
+    py: SiPython,
+    bash: SiZsh
 };
