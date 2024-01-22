@@ -14,9 +14,7 @@ export default function Footer() {
                             However, I decided to add a twist: rather than filling it with mundane text,
                             I&apos;m using this platform as a dual opportunity to enhance my writing skills as well.
                             <br></br>
-                            That said PLEASE consider both the app and its content (as helpful as it could be) not stable and may change or vanish any time.
-                            <br></br>
-                            If you like anything feel free to copy it somewhere safe 👨‍💻🚀
+                            That said PLEASE consider both the app and its content as not stable and may change or vanish any time.
                         </p>
                     </div>
                     <div className="flex items-center gap-2">
