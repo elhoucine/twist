@@ -43,15 +43,14 @@ export default async function page({ params }: { params: { id: string } }) {
                 <h1 className='text-3xl font-bold'>{blog?.title}</h1>
                 <p className="text-sm text-gray-400">{new Date(blog?.created_at || '').toDateString()}</p>
             </div>
-            <div className="w-full h-96 relative">
+            <div className="relative m-10">
                 <Image
                     className='object-hover object-center rounded-md border'
                     src={blog?.image_url || ''}
                     alt='cover'
-                    sizes='(max-wdith: 768px) 100vw,
-              (max-width: 1200px) 50vw, 33vw'
+                    width={800}
+                    height={600}
                     priority
-                    fill
                 />
             </div>
             <BlogContent blogId={blog.id} />
