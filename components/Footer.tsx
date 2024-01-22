@@ -10,12 +10,8 @@ export default function Footer() {
                     <div className="space-y-2 w-full sm:w96">
                         <h1 className='text-3xl font-bold'>Twist blog</h1>
                         <p>
-                            I began developing this blog application as part of a tutorial then it become my playground to play with React/NextJs,
-                            along with various other tools. Initially, the plan was to populate it with placeholder lorem ipsum content for testing purposes.
-                            However, I decided to add a twist: rather than filling it with mundane text,
-                            I&apos;m using this platform as a dual opportunity to enhance my writing skills as well.
-                            <br></br>
-                            That said PLEASE consider both the blog and its content as not stable and may change or vanish any time.
+                            I created this blog app as part of a tutorial then it become my playground to play with React/NextJs ecosystem. My initial plan was to populate it with lorem ipsum content.
+                            However, I decided to add a twist: use it as dual opportunity to enhance my writing skills as well. That said PLEASE consider this blog not stable and may change or vanish any time.
                         </p>
                     </div>
                     <div className="flex items-center gap-2">
