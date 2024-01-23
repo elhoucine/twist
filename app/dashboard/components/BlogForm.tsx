@@ -40,7 +40,7 @@ export default function BlogForm({
             content: blog?.blog_content?.content || "",
             image_url: blog?.image_url || "",
             is_premium: blog?.is_premium || false,
-            is_published: blog?.is_published || true,
+            is_published: blog?.is_published || false,
         },
     })
 
