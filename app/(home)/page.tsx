@@ -17,7 +17,7 @@ export default async function page() {
         >
           <div className="relative w-full h-72 md:h-64 xl:h-96">
             <Image
-              className='object-hover object-center'
+              className='object-hover object-center object-cover'
               src={blog.image_url}
               alt='cover'
               sizes='(max-wdith: 768px) 100vw,
