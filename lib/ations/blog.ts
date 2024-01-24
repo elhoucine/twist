@@ -30,7 +30,7 @@ export async function readBlog() {
         .from('blog')
         .select('*')
         .eq('is_published', true)
-        .order('created_at', { ascending: true });
+        .order('created_at', { ascending: false });
 }
 
 export async function readBlogAdmin() {
@@ -38,7 +38,7 @@ export async function readBlogAdmin() {
     return supabase
         .from('blog')
         .select('*')
-        .order('created_at', { ascending: true });
+        .order('created_at', { ascending: false });
 }
 
 export async function deleteBlogById(id: string) {
