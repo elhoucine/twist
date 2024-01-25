@@ -19,6 +19,9 @@ export default function MarkdownPreview({ content, className }: { content: strin
                 h1: ({ node, ...props }) => <h1 {...props} className=" text-3xl font-bold"></h1>,
                 h2: ({ node, ...props }) => <h1 {...props} className=" text-2xl font-bold"></h1>,
                 h3: ({ node, ...props }) => <h1 {...props} className=" text-xl font-bold"></h1>,
+                ul: ({node, ...props }) => <ul className='list-disc list-inside' {...props}></ul>,
+                blockquote: ({node, ...props }) => <blockquote className='select-all antialiased italic tracking-wide leading-loose' {...props}></blockquote>,
+                li: ({node, ...props }) => <li className='select-all hover:underline' {...props}></li>,
                 code: ({ node, className, children, ...props }) => {
                     const match = /language-(\w+)/.exec(className || "");
                     const id = (Math.floor(Math.random() * 1000) + 1).toString();
